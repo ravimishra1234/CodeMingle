@@ -2,18 +2,32 @@ const express = require('express')
 
 const app = express()
 
-app.use('/hello', (req, res) => {
-    res.send("hello hello hello")
-})
+// ! this will match all the http method API call to /user
+app.use('/user',[
+    (req,res,next)=>{
+    // res.send("Route handler 1!")
+    console.log("response successfully sent to the server")
+    next()
+    // res.send("Route handler 1!")
+},(req,res,next)=>{
+    console.log("response successfully sent to the server from 2nd route handler")
+    // res.send("Route handler 2!")
+    next()
 
-app.use('/contact', (req, res) => {
-    res.send("contact us")
-})
-
-app.use('/',(req,res)=>{
-    res.send("Home page")
-})
-
+}],(req,res,next)=>{
+    // res.send("Route handler 3!")
+    console.log("response successfully sent to the server by 3rd route handler")
+    next()
+},(req,res,next)=>{
+    // res.send("Route handler 4!") 
+    console.log("response successfully sent to the server by 4th route handler")
+    next()
+},(req,res)=>{
+    console.log("response successfully sent to the server by 5th route handler")
+    res.send("Route handler 5!") 
+   
+}    
+ )
 
 
 app.listen(7777,()=>{
