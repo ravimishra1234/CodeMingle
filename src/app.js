@@ -1,25 +1,31 @@
 const express = require('express')
+const connectDB = require('./config/database')
+const User = require("./models/user")
 
 const app = express()
-const {adminAuth , userAuth}=require("./middlewares/auth")
 
-// ! this will match all the http method API call to /user
-app.use('/admin',adminAuth)
-
-app.use("/user" , userAuth , (req,res)=>{
-    res.send("All data sent")
+app.post("/signup", async (req,res)=>{
+    const user = new User({
+        firstName: "Sachin",
+        lastName: "Tendulkar",
+        emailId: "sachin@gmail.com",
+        password: "sachin@123" 
+    })
+ try {
+    await user.save()
+    res.send("user added successfully")
+ } catch (err) {
+    res.status(400).send("Error saving the user:"+ err.message)
+ }
+   
 })
 
-app.use("/admin/getAllData" , (req,res)=>{
-    res.send("All data sent")
-})
-
-app.use("/admin/deleteUser",(req,res)=>{
-    res.send("Deleted a user")
-})
-
-
-
-app.listen(7777,()=>{
+connectDB()
+.then(()=>{
+    console.log("Database connection established")
+    app.listen(7777,()=>{
     console.log("Server is running on port number 7777....")
+})
+}).catch((err)=>{
+    console.error("Database cannot be connected")
 })
