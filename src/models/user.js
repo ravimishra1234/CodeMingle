@@ -46,6 +46,13 @@ const userSchema = new mongoose.Schema({
             } 
         }
     },
+    isPremium: {
+        type: Boolean,
+        default: false,
+    },
+    membershipType: {
+        type: String,
+    },
     photoUrl: {
         type: String,
         default: "https://tse4.mm.bing.net/th/id/OIP.7FsDgas0kcH0W1ajb1rZEgHaHa?pid=Api&P=0&h=180",

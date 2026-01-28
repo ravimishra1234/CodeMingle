@@ -3,9 +3,10 @@ const connectDB = require('./config/database')
 const cookieParser = require("cookie-parser")
 const dotenv = require("dotenv");
 const app = express()
-dotenv.config({});
 const cors = require('cors')
+dotenv.config({});
 
+require("./utils/cronjob")
 
 app.use(
   cors({
@@ -19,12 +20,14 @@ app.use(cookieParser())
 const authRouter = require("./routes/auth")
 const profileRouter = require("./routes/profile")
 const requestRouter = require("./routes/request")
-const userRouter = require('./routes/user')
+const userRouter = require('./routes/user');
+const paymentRouter = require('./routes/payment');
 
 app.use('/', authRouter)
 app.use('/', profileRouter)
 app.use('/', requestRouter)
 app.use('/', userRouter)
+app.use('/', paymentRouter)
 
 
 connectDB()
