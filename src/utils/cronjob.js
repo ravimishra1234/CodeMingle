@@ -31,7 +31,6 @@ cron.schedule("0 8 * * *", async () => {
           "New Friend Requests Pending for " + email,
           "There are so many friend requests pending, please login to CodeMingle and accept or reject the requests."
         );
-        console.log(res)
       } catch (err) {
         console.log(err);
       }
